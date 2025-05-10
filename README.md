@@ -1,54 +1,45 @@
-# React + TypeScript + Vite
+# 🧩 Проект: Приложение с авторизацией и защищёнными маршрутами
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Стек технологий
 
-Currently, two official plugins are available:
+- **Frontend:** React (на TypeScript)
+- **Сборщик:** Vite
+- **Стилизация:** CSS / UI-библиотеки (по желанию)
+- **Формы:** [`react-hook-form`](https://react-hook-form.com/)
+- **Валидация:** [`yup`](https://github.com/jquense/yup) с [`@hookform/resolvers`](https://react-hook-form.com/get-started#SchemaValidation)
+- **Роутинг:** `react-router-dom@6`
+- **Хранилище:** `localStorage` для хранения токена
+- **Типизация:** TypeScript
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📁 Структура проекта
+```bash
+src/
+├── components/
+│ └── FormInput.tsx # Переиспользуемый input с валидацией
+├── pages/
+│ ├── Login.tsx # Страница входа
+│ ├── Dashboard.tsx # Защищённая страница
+│ └── Register.tsx # Страница регистрации (опционально)
+├── routes/
+│ └── ProtectedRoute.tsx # Обёртка для защищённых маршрутов
+├──  index.ts 
+├── App.tsx # Маршрутизация
+└── main.tsx # Точка входа
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔐 Авторизация
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Пользователь вводит **email** и **пароль**.
+- После успешной валидации:
+  - В `localStorage` сохраняется фиктивный токен: `authToken`.
+  - Происходит редирект на `/dashboard`.
+- Все защищённые маршруты проверяют наличие токена.
+  - Если токена нет — происходит перенаправление на `/login`.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## 📌 Заметки
+
+- Проект легко расширяется: можно добавить регистрацию, сброс пароля, API-запросы и полноценный backend.
